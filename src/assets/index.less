@@ -3,3 +3,18 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
+@designWidth: 1920;
+@designHeight: 940;
+
+.vw(@name, @px) {
+	@{name}: (@px / @designWidth) * 100vw;
+}
+
+.vh(@name, @px) {
+	@{name}: (@px / @designHeight) * 100vh;
+}
+
+.font(@px) {
+	font-size: (@px / @designWidth) * 100vw;
+}

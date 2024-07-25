@@ -1,60 +1,29 @@
 import * as echarts from 'echarts'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { provinceMap, cityMap } from '../../config/mapData/geoMap'
-import saleNumber from '../../config/saleNumber'
+import './index.less'
 
-const Echart: React.FC = () => {
+interface Props {
+	options: any
+	valueData?: any
+}
+
+const Echart: React.FC<Props> = React.memo(({ options, valueData }) => {
 	const mapInstance = useRef<echarts.ECharts>()
 	const [geoData, setGeoData] = useState<any>()
-	const geoRef = useRef<any>(null)
 	const [geoLevel, setGeoLevel] = useState<any>([])
+	const geoRef = useRef<any>(null)
 	const geoLevelRef = useRef<any>([])
 
-	const option = {
-		title: {
-			textStyle: {
-				color: '#000'
-			},
-			left: 'center',
-			text: ''
-		},
-		tooltip: {
-			trigger: 'item',
-			formatter: '{b} : {c}'
-		},
-		series: [
-			{
-				name: '全国地图',
-				type: 'map',
-				mapType: 'map',
-				scaleLimit: {
-					min: 0.5,
-					max: 10
-				},
-				label: {
-					color: '#fff',
-					show: true,
-					position: [1, 100],
-					fontSize: 8,
-					offset: [2, 0],
-					align: 'left'
-				},
-				roam: true,
-				zoom: 1,
-				animation: true,
-				data: []
-			}
-		],
-		visualMap: {
-			min: 0,
-			max: 999999,
-			realtime: false,
-			calculable: true,
-			inRange: {
-				color: ['lightgreen', 'yellow', 'orange', 'red']
-			}
+	const initOption = () => {
+		const temp = JSON.parse(JSON.stringify(options))
+		if (!valueData) {
+			delete temp.visualMap
+			delete temp.tooltip.formatter
 		}
+		return temp
 	}
+	const option = initOption()
 
 	const geoJsonPath = () => {
 		const length = geoLevelRef.current?.length || 0
@@ -99,24 +68,25 @@ const Echart: React.FC = () => {
 		mapInstance.current?.setOption(option)
 	}
 
-	interface SaleData {
-		name: string
-		value: number
-	}
-	const getSaleNumber = (name: string): SaleData[] => {
+	const getSaleNumber = (name: string) => {
 		const length = geoLevelRef.current.length
 		if (length === 1) {
-			return saleNumber.map(s => {
+			return valueData?.map((s: any) => {
 				return {
 					name: s.name,
-					value: s?.children?.reduce((acc, c) => acc + c.value, 0)
+					value: s?.children?.reduce(
+						(acc: number, c: any) => acc + c.value,
+						0
+					)
 				}
 			})
 		}
 		if (length === 2) {
-			return saleNumber.find(item => item.name === name)?.children ?? []
+			return (
+				valueData?.find((item: any) => item.name === name)?.children ??
+				[]
+			)
 		}
-		return []
 	}
 
 	useEffect(() => {
@@ -133,7 +103,7 @@ const Echart: React.FC = () => {
 
 	useEffect(() => {
 		updateGeoData()
-	}, [])
+	}, [options])
 
 	useEffect(() => {
 		document.getElementById('map')!.oncontextmenu = () => false
@@ -141,6 +111,7 @@ const Echart: React.FC = () => {
 
 	useEffect(() => {
 		if (geoData) {
+			echarts.dispose(document.getElementById('map') as HTMLDivElement)
 			echarts.registerMap(geoRef.current?.name, geoRef.current as any)
 			mapInstance.current = echarts.init(
 				document.getElementById('map') as HTMLDivElement
@@ -179,6 +150,6 @@ const Echart: React.FC = () => {
 		}
 	}, [])
 
-	return <div style={{ width: '100%', height: '100%' }} id="map"></div>
-}
+	return <div id="map"></div>
+})
 export default Echart

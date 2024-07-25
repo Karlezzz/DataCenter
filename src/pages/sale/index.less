@@ -1,4 +1,80 @@
-.map {
-	width: 500px;
-	height: 500px;
+@import '../../assets/index.less';
+.sale {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(16, 17, 20, 0.886);
+	main {
+		width: 100%;
+		height: calc(100% - 100px);
+		.top {
+			display: flex;
+			align-items: center;
+			.vh(height,530);
+			.sale-number {
+				width: 35%;
+				height: 100%;
+				&-area {
+					margin: 0 auto;
+					width: calc(100% - 10px);
+					.vh(height,260);
+				}
+				&-decoration {
+					margin: 0 auto;
+					width: calc(100% - 30px);
+					.vh(height,10);
+				}
+				&-product {
+					margin: 0 auto;
+					.vh(margin-top,10);
+					width: calc(100% - 10px);
+					.vh(height,260);
+				}
+			}
+			.map {
+				width: 60%;
+				height: 100%;
+				border-radius: 10px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.trade {
+				width: 25%;
+				&-detail {
+					margin: 0 auto;
+					width: calc(100% - 10px);
+					.vh(height,290);
+				}
+				&-decoration {
+					margin: 0 auto;
+					width: calc(100% - 10px);
+					.vh(height,30);
+				}
+				&-total {
+					margin: 0 auto;
+					.vh(margin-top,10);
+					width: calc(100% - 10px);
+					.vh(height,230);
+				}
+			}
+		}
+		.bottom {
+			width: 100vw;
+			.vh(height,290);
+			display: flex;
+			.vh(margin-top,10);
+			.revenue-number {
+				margin: 0 auto;
+				width: calc(50% - 10px);
+			}
+			.order-number {
+				margin: 0 auto;
+				width: calc(25% - 10px);
+			}
+			.total {
+				margin: 0 auto;
+				width: calc(25% - 10px);
+			}
+		}
+	}
 }

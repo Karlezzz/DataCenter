@@ -43,22 +43,6 @@ const citiesInGuangdong = [
 	'云浮市'
 ]
 const area = [
-	// {
-	// 	province: '北京市',
-	// 	cities: ['东城区', '西城区', '朝阳区', '海淀区']
-	// },
-	// {
-	// 	province: '天津市',
-	// 	cities: ['和平区', '河西区', '南开区', '河北区']
-	// },
-	// {
-	// 	province: '上海市',
-	// 	cities: ['黄浦区', '徐汇区', '长宁区', '静安区']
-	// },
-	// {
-	// 	province: '重庆市',
-	// 	cities: ['渝中区', '江北区', '沙坪坝区', '九龙坡区']
-	// },
 	{
 		province: '河北省',
 		cities: ['石家庄市', '唐山市', '秦皇岛市', '邯郸市']
@@ -113,15 +97,7 @@ const area = [
 	}
 ]
 
-// 生成广东省的假数据
-function generateGuangdongFakeData(): any {
-	// return {
-	// 	name: '广东省',
-	// 	children: citiesInGuangdong.map(city => ({
-	// 		name: city,
-	// 		value: Math.floor(Math.random() * 999999)
-	// 	}))
-	// }
+function generateGuangdongFakeData() {
 	return area.map(province => {
 		return {
 			name: province.province,
@@ -135,7 +111,6 @@ function generateGuangdongFakeData(): any {
 	})
 }
 
-// 输出结果
 const guangdongFakeData = generateGuangdongFakeData()
 
 export default guangdongFakeData

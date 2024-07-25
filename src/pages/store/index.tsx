@@ -1,6 +1,9 @@
+import Header from '../../components/header'
+import './index.less'
 const Store = () => {
 	return (
-		<div>
+		<div className="store">
+			<Header />
 			<h1>Store</h1>
 		</div>
 	)

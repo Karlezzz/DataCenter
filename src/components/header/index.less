@@ -1,0 +1,39 @@
+@import '../../assets/index.less';
+.header {
+	width: 100%;
+	.vh(height,100);
+	.title {
+		.font(35);
+		font-weight: 600;
+		color: #fff;
+		text-align: center;
+		.vh(padding-top,20);
+	}
+	.toolbar {
+		width: 100%;
+		.vh(height,50);
+		.vh(padding-bottom,20);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.next-page {
+			text-align: left;
+			width: 180px;
+			margin-left: 30px;
+			color: #fff;
+			font-size: 18px;
+			cursor: pointer;
+			user-select: none;
+			svg {
+				margin-right: 10px;
+				margin-left: 10px;
+			}
+		}
+		.date {
+			span {
+				color: #fff;
+				margin-right: 10px;
+			}
+		}
+	}
+}
