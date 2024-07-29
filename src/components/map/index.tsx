@@ -6,9 +6,10 @@ import './index.less'
 interface Props {
 	options: any
 	valueData?: any
+	onChange?: (area: string[]) => void
 }
 
-const Echart: React.FC<Props> = React.memo(({ options, valueData }) => {
+const Map: React.FC<Props> = React.memo(({ options, valueData, onChange }) => {
 	const mapInstance = useRef<echarts.ECharts>()
 	const [geoData, setGeoData] = useState<any>()
 	const [geoLevel, setGeoLevel] = useState<any>([])
@@ -46,11 +47,13 @@ const Echart: React.FC<Props> = React.memo(({ options, valueData }) => {
 		childrenName: string = '中国',
 		action: boolean = true
 	) => {
+		geoLevelRef.current = action
+			? [...geoLevelRef.current, childrenName]
+			: geoLevelRef.current.slice(0, -1)
 		setGeoLevel((prevLevel: any) => {
 			const newLevel = action
 				? [...prevLevel, childrenName]
 				: prevLevel.slice(0, -1)
-			geoLevelRef.current = newLevel
 			return newLevel
 		})
 	}
@@ -124,10 +127,12 @@ const Echart: React.FC<Props> = React.memo(({ options, valueData }) => {
 		mapInstance.current?.on('click', (params: any) => {
 			if (geoLevelRef.current.length >= 3) return
 			updateGeoData(params?.name)
+			onChange?.(geoLevelRef.current)
 		})
 		mapInstance.current?.on('contextmenu', (params: any) => {
 			if (geoLevelRef.current.length === 1) return
 			updateGeoData(params?.name, false)
+			onChange?.(geoLevelRef.current)
 		})
 		mapInstance.current?.on('mouseover', () => {
 			mapInstance.current?.dispatchAction({ type: 'downplay' })
@@ -152,4 +157,4 @@ const Echart: React.FC<Props> = React.memo(({ options, valueData }) => {
 
 	return <div id="map"></div>
 })
-export default Echart
+export default Map
